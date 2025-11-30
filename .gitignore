@@ -10,3 +10,6 @@ cmake-build-*/
 Thumbs.db
 
 /scripts/
+
+/build-tests/
+/tests/build-tests/

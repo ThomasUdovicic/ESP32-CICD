@@ -22,8 +22,30 @@ jobs:
               run: |
                   clang-format --style=file --dry-run --Werror main/xiao_button_blink.cpp
 
-    build:
+    test:
         needs: lint
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Install CMake and g++
+              run: |
+                sudo apt-get update
+                sudo apt-get install -y cmake g++
+
+            - name: Configure tests
+              run: cmake -S tests -B build-tests
+
+            - name: Build tests
+              run: cmake --build build-tests --config Release
+
+            - name: Run tests
+              run: ctest --test-dir build-tests --output-on-failure
+
+    build:
+        needs: [lint, test]
         runs-on: ubuntu-latest
         
         steps:
