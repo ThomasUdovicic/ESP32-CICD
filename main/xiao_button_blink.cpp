@@ -5,7 +5,8 @@ extern "C" {
     #include "esp_log.h"
 }
 
-// static const char *TAG = "button_led+cpp";
+static const char *TAG = "button_led+cpp";
+// Let's see if workflow does what it is supposed to
 
 static constexpr gpio_num_t LED_GPIO    = GPIO_NUM_21;   // XIAO user LED (active-low) :contentReference[oaicite:3]{index=3}
 static constexpr gpio_num_t LED2_GPIO   = GPIO_NUM_1;    // Additional LED GPIO
@@ -47,6 +48,10 @@ extern "C" void app_main(void)
     btn_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
     btn_conf.intr_type = GPIO_INTR_DISABLE;
     gpio_config(&btn_conf);
+
+    // Print welcome message
+    ESP_LOGI(TAG, "Press the button to turn on the LED.");
+
 
     while (1) {
         // === Arduino: buttonState = digitalRead(buttonPin); ===
