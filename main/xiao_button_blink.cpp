@@ -1,4 +1,5 @@
 extern "C" {
+#include "button_logic.hpp"
 #include "driver/gpio.h"
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
@@ -55,16 +56,9 @@ extern "C" void app_main(void) {
     // === Arduino: buttonState = digitalRead(buttonPin); ===
     int buttonState = gpio_get_level(BUTTON_GPIO); // 1 = not pressed, 0 = pressed
 
-    // === Arduino: if (buttonState == HIGH) digitalWrite(LED_BUILTIN, HIGH); else LOW; ===
-    if (buttonState == 1) {
-      // Not pressed -> LED off
-      gpio_set_level(LED_GPIO, 1);  // HIGH = off (active-low)
-      gpio_set_level(LED2_GPIO, 0); // HIGH = off (active-low)
-    } else {
-      // Pressed -> LED on
-      gpio_set_level(LED_GPIO, 0);  // LOW = on
-      gpio_set_level(LED2_GPIO, 1); // LOW = on
-    }
+    LedState s = compute_led_state(buttonState);
+    gpio_set_level(LED_GPIO, s.led1_level);
+    gpio_set_level(LED2_GPIO, s.led2_level);
 
     vTaskDelay(pdMS_TO_TICKS(10)); // small delay like loop()’s timing
   }
