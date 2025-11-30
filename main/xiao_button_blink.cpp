@@ -8,11 +8,9 @@ extern "C" {
 static const char *TAG = "button_led+cpp";
 // Let's see if workflow does what it is supposed to
 
-static constexpr gpio_num_t LED_GPIO =
-    GPIO_NUM_21; // XIAO user LED (active-low) :contentReference[oaicite:3]{index=3}
-static constexpr gpio_num_t LED2_GPIO = GPIO_NUM_1; // Additional LED GPIO
-static constexpr gpio_num_t BUTTON_GPIO =
-    GPIO_NUM_2; // Expansion board button D1 :contentReference[oaicite:4]{index=4}
+static constexpr gpio_num_t LED_GPIO = GPIO_NUM_21;   // XIAO user LED (active-low)
+static constexpr gpio_num_t LED2_GPIO = GPIO_NUM_1;   // Additional LED GPIO
+static constexpr gpio_num_t BUTTON_GPIO = GPIO_NUM_2; // Expansion board button D1
 
 extern "C" void app_main(void) {
   // Reset pins to a known state (good habit on ESP32)
@@ -60,7 +58,7 @@ extern "C" void app_main(void) {
     // === Arduino: if (buttonState == HIGH) digitalWrite(LED_BUILTIN, HIGH); else LOW; ===
     if (buttonState == 1) {
       // Not pressed -> LED off
-        gpio_set_level(LED_GPIO, 1);  // HIGH = off (active-low)
+      gpio_set_level(LED_GPIO, 1);  // HIGH = off (active-low)
       gpio_set_level(LED2_GPIO, 0); // HIGH = off (active-low)
     } else {
       // Pressed -> LED on
