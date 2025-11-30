@@ -1,0 +1,10 @@
+sdkconfig.old
+
+/build/
+CMakeCache.txt
+cmake-build-*/
+
+.vscode/
+
+.DS_Store
+Thumbs.db
