@@ -20,7 +20,7 @@ jobs:
 
             - name: Check C/C++ formatting
               run: |
-                  clang-format --dry-run --Werror main/xiao_button_blink.cpp
+                  clang-format --style=file --dry-run --Werror main/xiao_button_blink.cpp
 
     build:
         needs: lint
