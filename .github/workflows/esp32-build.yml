@@ -68,3 +68,23 @@ jobs:
                 path: |
                   build/**/*.bin
                   build/**/*.elf
+
+      deploy:
+        needs: build
+        if: startsWith(github.ref, 'refs/tags/v')
+        runs-on: self-hosted
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Install ESP-IDF
+              uses: espressif/esp-idf-action@v1
+              with:
+                    version: v5.1
+
+            - name: Build and flash firmware to device
+              run: |
+                  idf.py set-target esp32s3
+                  idf.py -p /dev/cu.usbmodem2101 flash
+        
